@@ -24,6 +24,7 @@ public class ShiroConfig {
         * user：必须拥有  记住我 功能才能访问
         * perms：拥有对某个资源的权限才能访问
         * role： 拥有某个角色权限才能访问
+        *
         * */
         Map<String, String> filterMap =new LinkedHashMap<>();
         filterMap.put("/user/add","authc");
