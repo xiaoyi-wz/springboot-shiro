@@ -12,7 +12,6 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("执行了=>授权doGetAuthorizationInfo");
         return null;
     }
-
     @Override
     //认证
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
