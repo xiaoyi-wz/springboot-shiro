@@ -22,8 +22,10 @@ public class UserRealm extends AuthorizingRealm {
         String password="123456";
         UsernamePasswordToken userToken=(UsernamePasswordToken) token;
         if(!userToken.getUsername().equals(name)) {
+
             return null;//抛出异常  unknownAccountException
         }
+
         //密码认证  shiro做
         return new SimpleAuthenticationInfo("",password,"");
 
