@@ -1,11 +1,13 @@
 package com.xiaoyi.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,12 +28,16 @@ public class ShiroConfig {
         * role： 拥有某个角色权限才能访问
         *
         * */
-        Map<String, String> filterMap =new LinkedHashMap<>();
-        filterMap.put("/user/add","authc");
-        filterMap.put("/user/update","authc");
-        bean.setFilterChainDefinitionMap(filterMap);
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        Map<String ,String> filterChainDefinitionMap = new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/user/add","perms[user:add]");
+        filterChainDefinitionMap.put("/user/update","perms[user:update]");
+        filterChainDefinitionMap.put("/user/edit","perms[user:edit]");
+        filterChainDefinitionMap.put("/user/*","authc");
+        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         //设置登录的请求
         bean.setLoginUrl("/toLogin");
+        bean.setUnauthorizedUrl("/noauth");
 
         return bean;
     }
@@ -48,5 +54,9 @@ public class ShiroConfig {
     @Bean
     public UserRealm userRealm(){
         return new UserRealm();
+    }
+    @Bean
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
     }
 }
